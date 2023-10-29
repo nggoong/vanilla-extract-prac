@@ -1,34 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 바닐라 익스트랙트 
 
-## Getting Started
+> 바닐라 익스트랙트는 컴포넌트 스타일링 형식이 아니라, 클래스명으로 스타일을 먹이는 방식
 
-First, run the development server:
+따라서 하나의 엘리먼트에 여러 클래스를 먹이려면 조금 번거로움..
+아래와 같이 활용하면 됨.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```tsx
+import {TempWrapper} from './styled.css.ts'
+const Temp = () => {
+  return(
+    <div className={TempWrapper}>
+      <p className={`${TempWrapperPTag} test`}>안녕하세요</p>
+    </div>
+  )
+}
+
+
+
+// styled.css.ts
+import {style} from '@vanilla-extract/css'
+export const TempWrapper = style({
+  display:'flex',
+  fontSize:20,
+  color:'white',
+})
+
+export const TempWrapperPTag = style({
+  selectors: {
+    [`${TempWrapper} &.test`]: {
+        color:'purple'
+    }
+  }
+})
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📌 위와 같이 적용하는 이유는 바닐라 익스트랙트는 네스팅이 굉장히 까다로움
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+보통 네스팅은 부모 - 자식으로 흐르는데 바닐라 익스트랙트는 자식 - 부모로 역방향으로 흐름.. 따라서 이 부분 주의해야함
