@@ -37,3 +37,40 @@ export const TempWrapperPTag = style({
 ## 📌 위와 같이 적용하는 이유는 바닐라 익스트랙트는 네스팅이 굉장히 까다로움
 
 보통 네스팅은 부모 - 자식으로 흐르는데 바닐라 익스트랙트는 자식 - 부모로 역방향으로 흐름.. 따라서 이 부분 주의해야함
+
+
+
+# 클래스 두 개 먹이기
+아래와 같이 템플릿 리터럴로 이어줘야함.
+```tsx
+const TempPage = () => {
+  return(
+    <div className={`${wrap} ${parent}`}>
+      <div className={`${child} ${subContainer}`}></div>
+    </div>
+  )
+}
+
+export default TempPage
+```
+
+# globalStyle 사용하기
+```tsx
+const TempPage = () => {
+  return(
+    <div className={`${wrap} container`}>
+      <p>안녕하세요</p>
+    </div>
+  )
+}
+
+// style.css.ts
+
+export const wrap = style({
+  background:'black'
+})
+
+globalStyle(`${wrap} .container`, {
+  color:'red'
+})
+```
