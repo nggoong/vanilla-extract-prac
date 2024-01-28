@@ -15,8 +15,6 @@ const Temp = () => {
   )
 }
 
-
-
 // styled.css.ts
 import {style} from '@vanilla-extract/css'
 export const TempWrapper = style({
@@ -72,5 +70,94 @@ export const wrap = style({
 
 globalStyle(`${wrap} .container`, {
   color:'red'
+})
+```
+
+# 변수 사용하는 방법 2가지
+1. createTheme을 통해 반환받는 클래스와 변수를 사용하는 방법
+2. createVars()를 사용하여 변수를 만들어 사용하는 방법
+
+```tsx
+import { ptag, pink, blue, hero, themeClass, tempThemeClass, temphero} from "./style.css"
+const DantePage = () => {
+  return(
+    <>
+    <p className={`${ptag} ${blue}`}>sss</p>
+    <div className={`${themeClass} ${hero}`}>sdfsdf</div>
+    <div className={`${tempThemeClass} ${temphero}`}>헬로</div>
+    </>
+  )
+}
+
+export default DantePage
+
+// style.css.ts
+
+import { createTheme, style, createVar } from "@vanilla-extract/css";
+
+export const [themeClass, vars] = createTheme({
+  color: {
+    brand: 'blue',
+    red:'red'
+  },
+  space: {
+    small:'4px',
+    medium:'8px'
+  }
+})
+
+export const [tempThemeClass, tempVars] = createTheme({
+  color: {
+    brand:'yellow',
+    black:'black'
+  },
+  size: {
+    small:'50px',
+    large:"100px"
+  },
+  displayFlex: {
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  }
+})
+
+export const temphero = style({
+  background:tempVars.color.brand,
+  color:tempVars.color.black,
+  width:tempVars.size.large,
+  height:tempVars.size.small,
+  display:tempVars.displayFlex.display,
+  justifyContent:tempVars.displayFlex.justifyContent,
+  alignItems:tempVars.displayFlex.alignItems
+})
+
+export const hero = style({
+  backgroundColor: vars.color.brand,
+  color: vars.color.red,
+  padding: vars.space.small,
+  width:'100px',
+  height:'100px',
+  display:'flex',
+  justifyContent:'center',
+  alignItems:'center'
+})
+
+export const accentVar = createVar();
+
+export const blue = style({
+  vars:{
+    [accentVar]:'blue'
+  }
+})
+
+export const pink = style({
+  vars: {
+    [accentVar]:'pink'
+  }
+})
+
+export const ptag = style({
+  color:accentVar
 })
 ```
