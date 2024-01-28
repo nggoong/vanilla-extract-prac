@@ -65,3 +65,16 @@ export const pink = style({
 export const ptag = style({
   color:accentVar
 })
+
+
+
+export const typeThemeClass = createTheme(vars, {
+  color: {
+    brand: 'yellow',
+    red:'red'
+  },
+  space: {
+    small:'6px',
+    medium:'10px'
+  }
+})

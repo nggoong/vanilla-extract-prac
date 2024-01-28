@@ -161,3 +161,58 @@ export const ptag = style({
   color:accentVar
 })
 ```
+
+> 바닐라 익스트랙트에서는 createTheme()을 통해 반환된 vars를 theme contract라고 칭한다.
+
+# theme을 type or interface 처럼 사용해보기
+
+```tsx
+// style.css.ts
+export const [typeThemeClass, vars] = createTheme({
+  color: {
+    brand: 'blue',
+    red:'red'
+  },
+  space: {
+    small:'4px',
+    medium:'8px'
+  }
+})
+```
+
+위의 바닐라 익스트랙트 테마 객체가 있다고 가정하면,
+
+```tsx
+// 타입 에러 상황 🚫
+export const themeClass = createTheme(vars, {
+  color: {
+    newColor: 'blue', // error
+    red:'red',
+    systemColor:'skyblue' // error
+  },
+  space: {
+    small:'4px',
+    medium:'8px'
+  }
+})
+
+// 에러 없이 정상적으로 컴파일 ⭕️
+export const themeClass = createTheme(vars, {
+  color: {
+    brand: 'skyblue',
+    red:'orange'
+  },
+  space: {
+    small:'16px',
+    medium:'20px'
+  }
+})
+```
+
+위 코드의 주석처럼 결과가 발생한다.
+
+createTheme()을 통해 반환된 vars를 인터페이스 및 타입 처럼 사용할 수 있는 것이다.
+
+따라서 vars가 가지고 있는 테마 객체의 키 값이 변경 및 추가/삭제가 되면 컴파일 에러가 난다.
+
+> 꼭 포함되어야 할 테마 데이터를 잊지 않고 정의하게 할 수 있고, 오타 또한 검증이 가능하여 편리한 기능이라고 생각된다.
