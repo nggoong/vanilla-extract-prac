@@ -6,8 +6,8 @@ export const parent = style({
 
 export const invalid = style({
   selectors: {
-    [`${parent} & a[href]`]: {
-      color:'skyblue'
-    }
+    // [`${parent} & a[href]`]: {
+    //   color:'skyblue'
+    // }
   }
 })

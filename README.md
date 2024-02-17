@@ -241,3 +241,8 @@ export const vars = createThemeContract({
 ```
 
 이제 정말 typescript의 interface 및 type과 같은 역할을 하는 것 같이 보인다.
+
+# viewport metaTag
+
+> next.js에서는 뷰포트 매타태그가 디폴트로 들어가있다.
+하지만 overwrite가 가능하다.
